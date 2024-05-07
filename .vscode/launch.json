@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Security5aApplication<security5a>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.security5a.Security5aApplication",
+            "projectName": "security5a",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

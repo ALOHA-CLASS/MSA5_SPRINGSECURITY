@@ -16,12 +16,12 @@ CREATE TABLE `user` (
 -- 기본 데이터
 -- NoOpPasswordEncoder - 암호화 없이 로그인
 -- 사용자
-INSERT INTO user ( user_id, user_pw, name, email )
-VALUES ( 'user', '123456', '사용자', 'user@mail.com' );
+-- INSERT INTO user ( user_id, user_pw, name, email )
+-- VALUES ( 'user', '123456', '사용자', 'user@mail.com' );
 
 -- 관리자
-INSERT INTO user ( user_id, user_pw, name, email )
-VALUES ( 'admin', '123456', '관리자', 'admin@mail.com' );
+-- INSERT INTO user ( user_id, user_pw, name, email )
+-- VALUES ( 'admin', '123456', '관리자', 'admin@mail.com' );
 
 
 -- BCryptPasswordEncoder - 암호화 시
@@ -58,12 +58,3 @@ VALUES ( 'admin', 'ROLE_USER' );
 INSERT INTO user_auth ( user_id,  auth )
 VALUES ( 'admin', 'ROLE_ADMIN' );
 
-
--- 
-SELECT * 
-FROM `user`
-;
-
-SELECT *
-FROM user_auth
-;

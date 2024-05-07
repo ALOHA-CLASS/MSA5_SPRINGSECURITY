@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 화면</title>
+</head>
+<body>
+    <h1>Spring Security~!</h1>
+    <h3>스프링 시큐리티 기본 설정</h3>
+    <ul>
+        <li>✅ 인 메모리 인증 방식</li>
+        <li>✅ JDBC 인증 방식</li>
+        <li>✅ 사용자 정의 인증 방식</li>
+    </ul>
+
+    <!-- 로그인 시 -->
+    <!-- isAuthenticated() : 로그인 true, 아니면 false -->
+    <th:block sec:authorize="isAuthenticated()">
+        <h3>ID : <span sec:authentication="principal.username">아이디</span></h3>
+    </th:block>
+
+</body>
+</html>

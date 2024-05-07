@@ -15,7 +15,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @Configuration                  // 스프링 빈 설정 클래스로 지정
 @EnableWebSecurity              // 스프링 시큐리티 설정 빈으로 등록
-public class SecurityConfig {
+public class SecurityConfig  {
 
     @Autowired
     private DataSource dataSource;      // application.properties 에 정의한 DB 정보
