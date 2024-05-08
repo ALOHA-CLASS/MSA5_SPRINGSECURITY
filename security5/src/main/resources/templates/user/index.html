@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 페이지</title>
+</head>
+<body>
+    <h1>사용자 페이지</h1>
+    <h2>권한 : <span sec:authentication="principal.authorities"></span></h2>
+
+    <ul sec:authorioze="isAuthenticated()">
+        <!-- 로그인한 사용자 정보 -->
+        <li>principal 객체 : <span sec:authentication="principal"></span></li>
+        <li>사용자 ID : <span sec:authentication="principal.username"></span></li>
+        <li>사용자 권한 목록 : <span sec:authentication="principal.authorities"></span></li>
+    </ul>
+
+    <ul>
+        <li><a href="/">메인 화면</a></li>
+        <li><a href="/user">사용자</a></li>
+        <li><a href="/admin">관리자</a></li>
+    </ul>
+
+</body>
+</html>
