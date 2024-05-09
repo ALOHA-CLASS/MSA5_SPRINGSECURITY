@@ -101,19 +101,22 @@ public class SecurityConfig  {
         // logoutSuccessUrl : 로그아웃 성공 시, 이동할 URL 지정 ("/login")
         // logoutUrl        : 로그아웃 처리 요청 경로 지정 ("/logout")
         http.logout(logout -> logout.logoutSuccessUrl("/")
-                .logoutUrl("/logout")
-                .permitAll())
-                     ;
+                                    .logoutUrl("/logout")
+                                    // 쿠키 삭제
+                                    .deleteCookies("remember-id")
+                                    .permitAll()
+                    );
 
 
         // 🔐👩‍💼 자동 로그인 설정
         // key()                    : 자동 로그인에서 토큰 생성/검증에 사용되는 식별키
         // tokenRepository()        : 토큰 저장할 저장소 지정 (데이터소스 포함함 저장소객체)
+        //                            🎁 persistent_logins (자동로그인 테이블)
         // tokenValiditySeconds()   : 토큰 유효시간 설정 (예시 : 7일)
         http.rememberMe(me -> me.key("aloha")
-                .tokenRepository(tokenRepository())
-                .tokenValiditySeconds(60 * 60 * 24 * 7))
-                         ;
+                                .tokenRepository(tokenRepository())
+                                .tokenValiditySeconds(60 * 60 * 24 * 7))
+                                ;
 
         // ✅ 인증 예외 처리
         // accessDeniedPage()       : 접근 거부 시, 이동 경로 지정

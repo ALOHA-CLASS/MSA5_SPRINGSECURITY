@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSRF 토큰 - 요청</title>
+</head>
+<body>
+    <h1>CSRF 토큰 - 요청</h1>
+    <!--
+        🎫 CSRF 토큰 헤더
+        FORM 요청 : _csrf           (파라미터➡헤더)
+        AJAX 요청 : X-CSRF-TOKEN
+    -->
+
+    <h3>CSRF 토큰 - FORM 요청</h3>
+    <form action="/api/form" method="post">
+        <!-- 💍 CSRF TOKEN -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="text" name="name" id="name" placeholder="이름">
+        <button type="submit">FORM 요청</button>
+    </form>
+
+    <h3>CSRF 토큰 - AJAX 요청</h3>
+    <button type="button" onclick="ajax()">AJAX 요청</button>
+    <button type="button" onclick="ajaxJQuery()">AJAX 요청 (jQuery)</button>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        // 💍 CRSF TOKEN
+        const csrfToken = "[[${_csrf.token}]]"
+
+        function ajax() {
+            let request = new XMLHttpRequest()
+            let data = {
+                "name" : document.getElementById("name").value
+            }
+            request.open("POST", "/api/ajax")
+            request.setRequestHeader("Content-Type", "application/json")
+            request.setRequestHeader("X-CSRF-TOKEN", csrfToken) // 💍
+            request.send( JSON.stringify(data) )
+
+            request.onreadystatechange = function() {
+                if( request.readyState == request.DONE && request.status == 200 ) {
+                    const response = request.responseText
+                    alert(response)
+                }
+            }
+
+        }
+
+        function ajaxJQuery() {
+            let data = {
+                "name" : document.getElementById("name").value
+            }
+
+            $.ajax({
+                type        : "POST",                   // 요청 메소드
+                url         : "/api/ajax",              // 요청 URL
+                data        : JSON.stringify(data),     // 데이터
+                contentType : "application/json",       // 요청 데이터 타입
+                dataType    : "html",                   // 응답 데이터 타입
+                // 요청 전 설정
+                beforeSend: function(xhr) {
+                    /* 💍 CSRF TOKEN 설정 */
+                    xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken)
+                },
+                // 요청 성공
+                success: function(response) {
+                    alert(response)
+                },
+                // 요청 실패
+                error: function(xhr, status, error) {
+                    console.log("요청에 실패하였습니다.");
+                }
+
+            })
+        }
+    </script>
+</body>
+</html>

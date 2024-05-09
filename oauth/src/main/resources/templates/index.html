@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <th:block sec:authorize="isAuthenticated()">
+        <span sec:authentication="principal"></span>      
+        <!-- <h3>ID : <strong sec:authentication="principal.username">아이디</strong></h3>  -->
+    </th:block>
+
+    <a href="/oauth2/authorization/kakao" class="btn-kakao-login">카카오 로그인</a>
+
+</body>
+</html>

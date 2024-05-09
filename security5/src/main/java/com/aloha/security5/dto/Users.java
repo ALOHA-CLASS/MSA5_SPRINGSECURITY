@@ -11,6 +11,7 @@ public class Users {
     private int userNo;
     private String userId;
     private String userPw;
+    private String userPwCheck;
     private String name;
     private String email;
     private Date regDate;

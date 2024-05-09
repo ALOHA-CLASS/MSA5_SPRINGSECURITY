@@ -19,6 +19,26 @@
             "projectName": "security5",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-OauthApplication<oauth>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.oauth.OauthApplication",
+            "projectName": "oauth",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BannerApplication<banner>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.banner.BannerApplication",
+            "projectName": "banner",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

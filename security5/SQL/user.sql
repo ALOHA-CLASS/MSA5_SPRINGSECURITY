@@ -58,3 +58,16 @@ VALUES ( 'admin', 'ROLE_USER' );
 INSERT INTO user_auth ( user_id,  auth )
 VALUES ( 'admin', 'ROLE_ADMIN' );
 
+
+
+-- 
+SELECT * 
+FROM user
+;
+
+SELECT *
+FROM user_auth
+;
+
+TRUNCATE user;
+TRUNCATE user_auth;
