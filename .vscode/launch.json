@@ -39,6 +39,16 @@
             "projectName": "banner",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-KakaoApplication<kakao>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.kakao.KakaoApplication",
+            "projectName": "kakao",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

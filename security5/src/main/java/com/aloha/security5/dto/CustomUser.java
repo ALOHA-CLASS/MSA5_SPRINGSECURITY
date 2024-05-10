@@ -1,8 +1,11 @@
 package com.aloha.security5.dto;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,8 +32,19 @@ public class CustomUser implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
+        // List<SimpleGrantedAuthority> authList = new ArrayList<>();
+        // List<UserAuth> userAuthList = user.getAuthList();
+        // for (int i = 0; i < userAuthList.size(); i++) {
+        //     UserAuth userAuth = userAuthList.get(i);
+        //     String auth = userAuth.getAuth();
+        //     SimpleGrantedAuthority authority = new SimpleGrantedAuthority(auth);
+        //     authList.add(authority);
+        // }
+        // return authList;
+
         return user.getAuthList().stream()
-                                 .map( (auth) -> new SimpleGrantedAuthority(auth.getAuth()))
+                                 .map( (auth) -> new SimpleGrantedAuthority(auth.getAuth()) )
                                  .collect(Collectors.toList());
 
     }
