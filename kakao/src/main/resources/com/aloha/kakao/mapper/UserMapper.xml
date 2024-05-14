@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="매퍼 인터페이스 경로" -->
+<mapper namespace="com.aloha.kakao.mapper.UserMapper">
+
+    <resultMap type="Users" id="userMap">
+        <id property="userNo" column="user_no" />
+        
+        <result property="userNo" column="user_no" />
+        <result property="userId" column="user_id" />
+        <result property="userPw" column="user_pw" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="enabled" column="enabled" />
+        <result property="regDate" column="reg_date" />
+        <result property="updDate" column="upd_date" />
+        
+        <collection property="authList" resultMap="authMap"></collection>
+    </resultMap>
+        
+    <resultMap type="UserAuth" id="authMap">
+        <result property="userId" column="user_id" />
+        <result property="auth" column="auth" />
+    </resultMap>
+
+    <!-- 로그인 - id -->
+    <select id="login" resultMap="userMap">
+        SELECT u.user_no
+              ,u.user_id
+              ,user_pw
+              ,name
+              ,email
+              ,enabled
+              ,reg_date
+              ,upd_date
+              ,auth
+        FROM user u LEFT OUTER JOIN user_auth auth ON u.user_id = auth.user_id
+        WHERE u.user_id = #{userId}
+    </select>
+
+
+    <!-- 회원 조회 - id -->
+    <select id="select" resultMap="userMap">
+        SELECT u.user_no
+              ,u.user_id
+              ,user_pw
+              ,name
+              ,email
+              ,enabled
+              ,reg_date
+              ,upd_date
+              ,auth
+        FROM user u LEFT OUTER JOIN user_auth auth ON u.user_id = auth.user_id
+        WHERE u.user_id = #{userId}
+    </select>
+
+    <!-- 회원 가입 -->
+    <insert id="join">
+        INSERT INTO user ( user_id, user_pw, name, email, profile )
+        VALUES ( #{userId}, #{userPw}, #{name}, #{email}, #{profile} )
+    </insert>
+
+    <!-- 회원 정보 수정 -->
+    <update id="update">
+        UPDATE user
+           SET name = #{name}
+              ,email = #{email}
+              ,profile = #{profile}
+              ,upd_date = now()
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- 회원 권한 등록 -->
+    <insert id="insertAuth">
+        INSERT INTO user_auth( user_id, auth )
+        VALUES ( #{userId}, #{auth} )
+    </insert>
+
+    <!-- 소셜 회원 가입 -->
+    <insert id="insertSocial">
+        INSERT INTO user_social ( client_id, social_type, user_id, access_token, refresh_token, expires_at )
+        VALUES ( #{clientId}, #{socialType}, #{userId}, #{accessToken}, #{refreshToken}, #{expiresAt} )
+    </insert>
+
+
+    <!-- 소셜 회원 조회 -->
+    <select id="selectSocial" resultType="UserSocial">
+        SELECT * 
+        FROM user_social
+        WHERE social_type = #{socialType} 
+        AND client_id = #{clientId}
+    </select>
+
+
+    <!-- 소셜 회원 조회 -->
+    <update id="updateSocial">
+        UPDATE user_social
+           SET access_token = #{accessToken}
+              ,refresh_token = #{refreshToken}
+              ,user_id = #{userId}
+        WHERE social_type = #{socialType} 
+        AND client_id = #{clientId}
+    </update>
+
+
+
+
+</mapper>

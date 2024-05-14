@@ -1,4 +1,4 @@
-package com.aloha.security5.security;
+package com.aloha.kakao.security;
 
 import java.io.IOException;
 
@@ -6,11 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
-import com.aloha.security5.dto.CustomUser;
+import com.aloha.kakao.dto.CustomUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * ✅ 로그인 성공 처리 클래스
  */
 @Slf4j
+@Component
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
     
     
@@ -33,7 +36,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
         // 아이디 저장
         String rememberId = request.getParameter("remember-id");    // 아이디 저장 여부
-        String username = request.getParameter("id");               // 아이디
+        String username = request.getParameter("username");         // 아이디
         log.info("rememberId : " + rememberId);
         log.info("id : " + username);
 
@@ -65,6 +68,10 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         log.info("아이디 : " + user.getUsername());
         log.info("패스워드 : " + user.getPassword());       // 보안상 노출❌
         log.info("권한 : " + user.getAuthorities());    
+
+        // 세션의 정보 등록
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user.getUser());
         
         super.onAuthenticationSuccess(request, response, authentication);
     }
