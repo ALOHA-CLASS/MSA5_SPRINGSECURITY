@@ -1,6 +1,7 @@
 package com.aloha.kakao.controller;
 
 import java.security.Principal;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,20 +34,33 @@ public class HomeController {
     @GetMapping({"/", ""})
     public String home(Principal principal
                     , @AuthenticationPrincipal OAuth2User oauth2User
-                    , HttpServletRequest request) {
+                    , HttpServletRequest request) throws Exception {
         log.info("::::: 메인 화면 :::::");
-        log.info("pricipal : " + principal);
+        log.info(":::::::::::::::::::: principal ::::::::::::::::::::");
+        log.info("principal : " + principal);
+        
+        log.info("\n");
+        log.info(":::::::::::::::::::: oauth2User ::::::::::::::::::::");
         log.info("oauth2User : " + oauth2User);
+        Map<String, Object> properties = ((Map<String, Object>) oauth2User.getAttributes().get("properties"));
+        String profileImg = (String) properties.get("profile_image");
+        String nickname = (String) properties.get("nickname");
+        String email = (String) properties.get("email");
+        log.info("\n");
 
-        HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		String accessToken = (String)session.getAttribute("access_token");
-        log.info("id : " + id);
-        log.info("accessToken : " + accessToken);
+        log.info("profileImg : " + profileImg);
+        log.info("nickname : " + nickname);
+        log.info("email : " + email);
+        
+        // HttpSession session = request.getSession();
+		// String id = (String)session.getAttribute("id");
+		// String accessToken = (String)session.getAttribute("access_token");
+        // log.info("id : " + id);
+        // log.info("accessToken : " + accessToken);
 
-        //
-        Users user = (Users) session.getAttribute("user");
-        log.info("user : " + user);
+        // //
+        // Users user = (Users) session.getAttribute("user");
+        // log.info("user : " + user);
 
         return "index";
     }

@@ -1,5 +1,8 @@
 package com.aloha.kakao.service;
 
+import java.security.Principal;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.aloha.kakao.dto.CustomUser;
@@ -16,6 +20,8 @@ import com.aloha.kakao.dto.UserAuth;
 import com.aloha.kakao.dto.UserSocial;
 import com.aloha.kakao.dto.Users;
 import com.aloha.kakao.mapper.UserMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -114,6 +120,29 @@ public class UserServiceImpl implements UserService {
     public int update(Users user) throws Exception {
         int result = userMapper.update(user);
         return result;
+    }
+
+    /**
+     * Principal 
+     * 1. Principal 이 OAuth2AuthenticationToken 이면, 
+     */
+    @Override
+    public Users principalToUser(Principal principal) throws Exception {
+
+        log.info("principal : " + principal);
+        if( principal instanceof OAuth2AuthenticationToken ) {
+            log.info("OAuth 로 인증...");
+            OAuth2User oauth2User = ((OAuth2AuthenticationToken) principal).getPrincipal();
+            Map<String, Object> attributes = oauth2User.getAttributes();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode node = objectMapper.valueToTree( attributes );
+            
+            String profileImg = node.get("properties").get("profile_image").toString();
+            log.info("profileImg : " + profileImg);
+
+        }
+
+        return null;
     }   
     
 }

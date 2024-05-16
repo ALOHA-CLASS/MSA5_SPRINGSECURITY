@@ -1,4 +1,6 @@
--- Active: 1714007442487@@127.0.0.1@3306@joeun
+-- Active: 1715739288554@@127.0.0.1@3306@joeun
+DROP TABLE IF EXISTS persistent_logins;
+
 create table persistent_logins (
     username varchar(64) not null
     , series varchar(64) primary key

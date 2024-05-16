@@ -58,8 +58,12 @@
                     <div class="d-flex flex-column align-items-center">
                         <div class="item my-2">
                             <!-- 프로필 사진 -->
-                            <img src="" alt="">
-                            
+                            <th:block th:if="${session.user.profile == null}">
+                                <img src="/img/profile.png" class="rounded-circle shadow-4 border" width="110" alt="프로필" >
+                            </th:block>
+                            <th:block th:if="${session.user.profile != null}">
+                                <img th:src="${session.user.profile}" class="rounded-circle shadow-4 border" width="110" alt="프로필">
+                            </th:block>
                         </div>
                         <div class="item my-2">
                             <!-- 닉네임 -->

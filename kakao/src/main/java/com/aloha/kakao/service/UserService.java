@@ -1,5 +1,7 @@
 package com.aloha.kakao.service;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.aloha.kakao.dto.UserAuth;
@@ -31,5 +33,8 @@ public interface UserService {
 
     // 👩‍💻 소셜 회원 정보 갱신
     public int updateSocial(UserSocial userSocial) throws Exception;
+
+    // Principal 추출해서 Users 로 세팅
+    public Users principalToUser(Principal principal) throws Exception;
     
 }

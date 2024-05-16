@@ -1,5 +1,6 @@
-<html>
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta charset="UTF-8">
@@ -10,7 +11,7 @@
     <!-- 썸네일 이미지 설정 -->
     <meta property="og:image" content="https://i.imgur.com/tXd2rVi.png">
     <!-- 웹 페이지 설명 (선택 사항) -->
-    <meta property="og:description" content="ALOHA CLASS🌴 - 쇼핑몰 프로젝트">
+    <meta property="og:description" content="ALOHA CLASS🌴 - 소셜 로그인">
     <!-- 웹 페이지 URL -->
     <meta property="og:url" content="">
     <!-- 웹 페이지 제목 -->
@@ -19,7 +20,7 @@
     <!-- 웹 페이지 타입 (웹사이트, 기사, 제품 등) -->
     <meta property="og:type" content="website">
     <!-- 검색어 -->
-    <meta name="keywords" content="쇼핑몰 프로젝트, 자바 웹개발, ALOHA CLASS, 알로하 클래스">
+    <meta name="keywords" content="소셜 로그인자바 웹개발, ALOHA CLASS, 알로하 클래스">
     <meta name="robots" content="index, follow">
     <!-- 사이트 맵 -->
     <link rel="sitemap" href="/static/sitemap.xml">
@@ -92,15 +93,13 @@
     </div>
     
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js">
     </script>
 
     <script>
 
         // 💍 CRSF TOKEN
         const csrfToken = "[[${_csrf.token}]]"
-
 
         function checkId() {
             const userId = document.getElementById("userId").value

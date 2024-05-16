@@ -1,5 +1,5 @@
 
-DROP TABLE user_social;
+DROP TABLE IF EXISTS user_social;
 
 CREATE TABLE user_social (
     no INT PRIMARY KEY AUTO_INCREMENT,
