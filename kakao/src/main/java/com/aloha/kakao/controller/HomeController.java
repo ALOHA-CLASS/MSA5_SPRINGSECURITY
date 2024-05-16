@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,16 +41,17 @@ public class HomeController {
         log.info("\n");
         log.info(":::::::::::::::::::: oauth2User ::::::::::::::::::::");
         log.info("oauth2User : " + oauth2User);
-        Map<String, Object> properties = ((Map<String, Object>) oauth2User.getAttributes().get("properties"));
-        String profileImg = (String) properties.get("profile_image");
-        String nickname = (String) properties.get("nickname");
-        String email = (String) properties.get("email");
         log.info("\n");
+        if( oauth2User != null ) {
+            Map<String, Object> properties = ((Map<String, Object>) oauth2User.getAttributes().get("properties"));
+            String profileImg = (String) properties.get("profile_image");
+            String nickname = (String) properties.get("nickname");
+            String email = (String) properties.get("email");
+            log.info("profileImg : " + profileImg);
+            log.info("nickname : " + nickname);
+            log.info("email : " + email);
+        }
 
-        log.info("profileImg : " + profileImg);
-        log.info("nickname : " + nickname);
-        log.info("email : " + email);
-        
         // HttpSession session = request.getSession();
 		// String id = (String)session.getAttribute("id");
 		// String accessToken = (String)session.getAttribute("access_token");
