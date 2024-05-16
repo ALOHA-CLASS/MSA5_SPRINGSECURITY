@@ -49,6 +49,16 @@
             "projectName": "kakao",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-OauthTestApplication<oauth-test>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.oauthtest.OauthTestApplication",
+            "projectName": "oauth-test",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
