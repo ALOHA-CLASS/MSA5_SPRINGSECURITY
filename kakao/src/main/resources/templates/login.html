@@ -76,6 +76,10 @@
                 <th:block th:if="${param.error}">
                     <p class="text-center text-danger">아이디 또는 비밀번호를 잘못 입력했습니다.</p>
                 </th:block>
+                <!-- 로그아웃 완료 -->
+                <th:block th:if="${param.logout}">
+                    <p class="text-center text-success">정상적으로 로그아웃 되었습니다.</p>
+                </th:block>
 
                 <div class="d-grid gap-2">
                     <button class="btn btn-lg btn-primary w-100 py-2" type="submit">로그인</button>
