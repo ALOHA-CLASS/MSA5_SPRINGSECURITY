@@ -76,8 +76,9 @@ public class UserController {
     }
 
 
-    // 인증된 사용자 자신만 허용
-    @PreAuthorize("#user.userId == authentication.name")
+    // @PreAuthorize("hasRole('ROLE_USER')")                    // 👩‍💼 사용자 권한만 허용
+    // @PreAuthorize("#user.userId == authentication.name")     // 👩‍💻 인증된 사용자 자신만 허용
+    @PreAuthorize("hasRole('ROLE_USER') and #user.userId == authentication.name") // 👩‍💼 + 👩‍💻
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody Users user) throws Exception {
         log.info("[PUT] - /users");
