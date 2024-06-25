@@ -69,6 +69,16 @@
             "projectName": "jwt",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-JwtSecurityApplication<jwt-security>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.jwt_security.JwtSecurityApplication",
+            "projectName": "jwt-security",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
