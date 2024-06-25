@@ -59,6 +59,16 @@
             "projectName": "oauth-test",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-JwtApplication<jwt>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.jwt.JwtApplication",
+            "projectName": "jwt",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

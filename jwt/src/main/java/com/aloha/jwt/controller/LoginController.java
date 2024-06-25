@@ -7,14 +7,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aloha.jwt.constants.SecurityConstants;
 import com.aloha.jwt.domain.AuthenticationRequest;
 import com.aloha.jwt.prop.JwtProps;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +32,7 @@ public class LoginController {
 
     /**
      * 👩‍💼➡🔐 JWT 을 생성하는 Login 요청
-     * [GET] - /login
+     * [POST] - /login
      * body : 
             {
                 "username" : "joeun",
@@ -74,6 +78,54 @@ public class LoginController {
 
         // 생성된 토큰을 클라이언트에게 반환
         return new ResponseEntity<String>(jwt, HttpStatus.OK);
+    }
+
+    /**
+     * 🔐➡👩‍💼 JWT 를 해석하는 요청
+     * 
+     * @param header
+     * @return
+     */
+    @GetMapping("/user/info")
+    public ResponseEntity<String> userInfo(@RequestHeader(name="Authorization") String header) {
+
+        log.info("===== header =====");
+        log.info("Authorization : " + header);
+
+        String jwt = header.substring(7);           // "Bearer " + jwt  ➡ jwt 추출
+
+        log.info("jwt : " + jwt);
+
+        String secretKey = jwtProps.getSecretKey();
+        byte[] signingKey = jwtProps.getSecretKey().getBytes();
+
+        log.info("secretKey : " + secretKey);
+        log.info("signingKey : " + signingKey);
+
+        // OK : deprecated 업애기 (version: before 1.0)
+        // Jws<Claims> parsedToken = Jwts.parser()
+        //                                 .setSigningKey(signingKey)
+        //                                 .build()
+        //                                 .parseClaimsJws(jwt);
+
+        // OK : deprecated 된 코드 업데이트 (version : after 1.0)
+        // - setSigningKey(byte[]) ➡ verifyWith(SecretKey)
+        // - parseClaimsJws(CharSequence) ➡ parseSignedClaims(CharSequence)
+        Jws<Claims> parsedToken = Jwts.parser()
+                                        .verifyWith(Keys.hmacShaKeyFor(signingKey))
+                                        .build()
+                                        .parseSignedClaims(jwt);
+        log.info("parsedToken : " + parsedToken);
+
+        
+        String username = parsedToken.getPayload().get("uid").toString();
+        log.info("username : " + username);
+
+        Claims claims = parsedToken.getPayload();
+        Object roles = claims.get("rol");
+        log.info("roles : " + roles);
+
+        return new ResponseEntity<String>(parsedToken.toString(), HttpStatus.OK);
     }
   
 }
